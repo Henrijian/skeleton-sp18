@@ -1,4 +1,4 @@
-package byog.lab5;
+package byog.lab12;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;

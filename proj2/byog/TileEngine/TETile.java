@@ -1,6 +1,7 @@
 package byog.TileEngine;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -8,7 +9,7 @@ import edu.princeton.cs.introcs.StdDraw;
 import byog.Core.RandomUtils;
 
 /**
- * The TETile object is used to represent a single tile in your game. A 2D array of tiles make up a
+ * The TETile object is used to represent a single tile in your world. A 2D array of tiles make up a
  * board, and can be drawn to the screen using the TERenderer class.
  *
  * All TETile objects must have a character, textcolor, and background color to be used to represent
@@ -21,7 +22,7 @@ import byog.Core.RandomUtils;
  * to make your TETile class mutable, if you prefer.
  */
 
-public class TETile {
+public class TETile implements Serializable {
     private final char character; // Do not rename character or the autograder will break.
     private final Color textColor;
     private final Color backgroundColor;
@@ -69,7 +70,6 @@ public class TETile {
     public TETile(TETile t, Color textColor) {
         this(t.character, textColor, t.backgroundColor, t.description, t.filepath);
     }
-
 
     /**
      * Draws the tile to the screen at location x, y. If a valid filepath is provided,
@@ -191,25 +191,36 @@ public class TETile {
     }
 
     @Override
-    /** Provides an equals method that is consistent
-     *  with the way that the autograder works.
-     */
-    public boolean equals(Object x) {
-        if (this == x) {
+    public boolean equals(Object other) {
+        if (other == this) {
             return true;
         }
-        if (x == null) {
+        if (!(other instanceof TETile)) {
             return false;
         }
-        if (this.getClass() != x.getClass()) {
-            return false;
+        TETile otherTile = (TETile) other;
+        boolean filePathSame;
+        if (filepath != null) {
+            filePathSame = filepath.equals(otherTile.filepath);
+        } else {
+            filePathSame = otherTile.filepath == null;
         }
-        TETile that = (TETile) x;
-        return this.character == that.character;
+        return character == otherTile.character && textColor.equals(otherTile.textColor)
+                && backgroundColor.equals(otherTile.backgroundColor) && description.equals(otherTile.description)
+                && filePathSame;
     }
 
     @Override
     public int hashCode() {
-        return this.character;
+        final int BASE = 31;
+        int result = 17;
+        result = BASE * result + Character.hashCode(character);
+        result = BASE * result + textColor.hashCode();
+        result = BASE * result + backgroundColor.hashCode();
+        result = BASE * result + description.hashCode();
+        if (filepath != null) {
+            result = BASE * result + filepath.hashCode();
+        }
+        return result;
     }
 }

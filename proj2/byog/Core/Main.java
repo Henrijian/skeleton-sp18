@@ -1,9 +1,7 @@
 package byog.Core;
 
-import byog.TileEngine.TETile;
-
 /** This is the main entry point for the program. This class simply parses
- *  the command line inputs, and lets the byog.Core.Game class take over
+ *  the command line inputs, and lets the byow.Core.Engine class take over
  *  in either keyboard or input string mode.
  */
 public class Main {
@@ -13,11 +11,11 @@ public class Main {
             System.exit(0);
         } else if (args.length == 1) {
             Game game = new Game();
-            TETile[][] worldState = game.playWithInputString(args[0]);
-            System.out.println(TETile.toString(worldState));
+            game.interactWithInputString(args[0]);
+            System.out.println(game.toString());
         } else {
             Game game = new Game();
-            game.playWithKeyboard();
+            game.interactWithKeyboard();
         }
     }
 }
