@@ -209,26 +209,34 @@ public class World implements Serializable {
         int deltaX = 0;
         int deltaY = 0;
         switch (direction) {
-            case TOP -> deltaY += 1;
-            case RIGHT_TOP -> {
+            case TOP:
+                deltaY += 1;
+                break;
+            case RIGHT_TOP:
                 deltaX += 1;
                 deltaY += 1;
-            }
-            case RIGHT -> deltaX += 1;
-            case RIGHT_BOTTOM -> {
+                break;
+            case RIGHT:
+                deltaX += 1;
+                break;
+            case RIGHT_BOTTOM:
                 deltaX += 1;
                 deltaY -= 1;
-            }
-            case BOTTOM -> deltaY -= 1;
-            case LEFT_BOTTOM -> {
+                break;
+            case BOTTOM:
+                deltaY -= 1;
+                break;
+            case LEFT_BOTTOM:
                 deltaX -= 1;
                 deltaY -= 1;
-            }
-            case LEFT -> deltaX -= 1;
-            case LEFT_TOP -> {
+                break;
+            case LEFT:
+                deltaX -= 1;
+                break;
+            case LEFT_TOP:
                 deltaX -= 1;
                 deltaY += 1;
-            }
+                break;
         }
         int newUserX = userPosition.x + deltaX;
         if (newUserX < 0 || width <= newUserX) {

@@ -71,10 +71,18 @@ public class MainMenuInterface extends BaseInterface {
             MenuItem selectedItem = menuItemKeyMap.get(gotKey);
             boolean finished = true;
             switch (selectedItem) {
-                case NEW_GAME -> nextUserInterface = new NewGameInterface(config);
-                case LOAD_GAME -> nextUserInterface = new LoadGameInterface(config);
-                case QUIT -> System.exit(0);
-                default -> finished = false;
+                case NEW_GAME:
+                    nextUserInterface = new NewGameInterface(config);
+                    break;
+                case LOAD_GAME:
+                    nextUserInterface = new LoadGameInterface(config);
+                    break;
+                case QUIT:
+                    System.exit(0);
+                    break;
+                default:
+                    finished = false;
+                    break;
             }
             if (finished) {
                 return;

@@ -77,7 +77,7 @@ public class Game {
      * @param input the input string to feed to your program
      * @return the 2D TETile[][] representing the state of the world
      */
-    public TETile[][] interactWithInputString(String input) {
+    public TETile[][] playWithInputString(String input) {
         this.config.hideInterface = true;
         StringInput stringInput = new StringInput(input);
         start(stringInput);
