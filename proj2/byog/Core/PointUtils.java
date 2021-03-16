@@ -61,12 +61,18 @@ public class PointUtils {
      * @param blocks blocked points, trace cannot contains these points.
      * @return list of traced points, null if theres is no trace between start and end points.
      */
-    public static List<Point> shortestTrace(Point start, Point end, Set<Point> blocks) {
+    public static List<Point> shortestTrace(Point start, Point end, Set<Point> blocks, int minX, int minY, int maxX, int maxY) {
         if (start == null) {
             throw new IllegalArgumentException("Cannot get the shortest trace from null start point.");
         }
         if (end == null) {
             throw new IllegalArgumentException("Cannot get the shortest trace to null end point.");
+        }
+        if (maxX < minX) {
+            throw new IllegalArgumentException("Boundary is not valid, minX = "+minX+", maxX = "+maxX);
+        }
+        if (maxY < minY) {
+            throw new IllegalArgumentException("Boundary is not valid, minY = "+minY+", maxY = "+maxY);
         }
         // A* to find the shortest path between two points.
         ArrayHeapMinPQ<Point> distanceMinPQ = new ArrayHeapMinPQ<>();
@@ -87,6 +93,9 @@ public class PointUtils {
                     continue;
                 }
                 if (blocks != null && blocks.contains(vertPos)) {
+                    continue;
+                }
+                if (!PointUtils.inBoundary(vertPos, minX, minY, maxX, maxY)) {
                     continue;
                 }
                 int startToVertPos = distTo.get(pos) + distanceSqrBetween(pos, vertPos);
